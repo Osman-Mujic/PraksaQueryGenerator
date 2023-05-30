@@ -11,11 +11,28 @@ menu_bar = tk.Menu(root)
 help_menu = tk.Menu(menu_bar, tearoff=0)
 help_menu.add_command(label="Info", command=lambda: messagebox.showinfo("Help", "In order to use the program you will "
                                                                                 "need to write a sql query + add a {"
-                                                                                "brojac} somewhere in the query, \n "
+                                                                                "brojac} somewhere in the query, "
                                                                                 "after you finish your query add "
                                                                                 "digits that you want your query to "
-                                                                                "go from and to and after that click "
-                                                                                "view to generate your desired script"))
+                                                                                "go from and to or do it in a custom "
+                                                                                "order if you wish that ( you can "
+                                                                                "only do one of the two ways not "
+                                                                                "both).\n\nAfter that click the view "
+                                                                                "button and your query should be "
+                                                                                "generated, if you wish to reuse it "
+                                                                                "you can save it using the save "
+                                                                                "button and giving it a name (DO NOT "
+                                                                                "NAME MULTIPLE TEMPLATES WITH THE "
+                                                                                "SAME NAME).\n\nAfter that you will "
+                                                                                "have some more options to rename a "
+                                                                                "saved template or to delete it. To "
+                                                                                "use the saved templates it is best "
+                                                                                "to click on a selected template and "
+                                                                                "then use the keyboard to navigate to "
+                                                                                "your desired template because the "
+                                                                                "mouse does not interact the best "
+                                                                                "with a listbox."))
+
 menu_bar.add_cascade(label="Help", menu=help_menu)
 root.config(menu=menu_bar)
 
