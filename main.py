@@ -208,14 +208,15 @@ def delete():
         if confirm:
             name_listbox.delete(tk.ACTIVE)
 
-            with open('templates.json', 'r') as file:
-                templates = [json.loads(line) for line in file]
-
+            templates = load_templates()
             templates = [template for template in templates if template['name'] != selected_query]
 
             with open('templates.json', 'w') as file:
-                for template in templates:
-                    file.write(json.dumps(template) + '\n')
+                json.dump(templates, file, indent=2)
+
+            messagebox.showinfo("Success", "Template deleted successfully.")
+    else:
+        messagebox.showerror("Error", "No template selected.")
 
 
 def rename_template():
