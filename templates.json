@@ -1,20 +1,27 @@
 [
   {
-    "name": "Testiranjenjenje",
-    "query": "select {brojac}where {brojac} = {brojac}",
+    "name": "weewtg",
+    "query": "{brojac} + {brojac} = {brojac} * {brojac} - {brojac}",
     "od": "1",
-    "do": "66",
+    "do": "12",
     "custom_order": ""
   },
   {
-    "name": "test 2",
+    "name": "rdgg",
+    "query": "select * from tabela where user_id = {brojac}s",
+    "od": "1",
+    "do": "500",
+    "custom_order": ""
+  },
+  {
+    "name": "edrewfssa",
     "query": "select * from tabela where user_id = {brojac}",
     "od": "1",
     "do": "500",
     "custom_order": ""
   },
   {
-    "name": "Promjenjeno ime",
+    "name": "grfgergw",
     "query": "{brojac} + {brojac} = {brojac} * {brojac} - {brojac}",
     "od": "1",
     "do": "12",

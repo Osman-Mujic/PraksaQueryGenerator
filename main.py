@@ -222,15 +222,12 @@ def delete():
 def rename_template():
     selected_template = name_listbox.get(tk.ACTIVE)
     if selected_template:
-        new_name = simpledialog.askstring("Rename Template", "Enter a new name for the template:")
+        new_name = simpledialog.askstring("Rename Template", "Enter a new name for the template:\t\t\t")
         if new_name:
-            with open('templates.json', 'r') as file:
-                try:
-                    templates = json.load(file)
-                except json.JSONDecodeError:
-                    templates = []
+            templates = load_templates()
 
-            template = next((t for t in templates if t['name'] == selected_template), None)
+            template_index = name_listbox.curselection()[0]
+            template = templates[template_index]
 
             if template:
                 template['name'] = new_name
@@ -238,12 +235,15 @@ def rename_template():
                 with open('templates.json', 'w') as file:
                     json.dump(templates, file, indent=2)
 
-                name_listbox.delete(tk.ACTIVE)
-                name_listbox.insert(tk.END, new_name)
+                name_listbox.delete(template_index)
+                name_listbox.insert(template_index, new_name)
+                name_listbox.selection_set(template_index)
             else:
                 messagebox.showerror("Error", "Selected template not found.")
         else:
             messagebox.showerror("Error", "New name cannot be empty.")
+
+
 
 
 
