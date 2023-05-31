@@ -284,6 +284,7 @@ def move_up():
         selected_index -= 1
         name_listbox.selection_set(selected_index)
 
+
 def move_down():
     global selected_index
     if selected_index is not None and selected_index < name_listbox.size() - 1:
@@ -292,6 +293,7 @@ def move_down():
         name_listbox.insert(selected_index + 1, item_text)
         selected_index += 1
         name_listbox.selection_set(selected_index)
+
 
 def save_template_order():
     templates = []
