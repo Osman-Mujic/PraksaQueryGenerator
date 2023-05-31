@@ -307,11 +307,11 @@ def save_template_order():
         json.dump(templates, file, indent=2)
 
 
-button_up = tk.Button(root, text="^", command=move_up)
+button_up = tk.Button(root, text="⋀", command=move_up)
 button_up.configure(bg='green', cursor='hand2', fg='#f0f0f0', font=('Arial', 12, 'bold'))
 button_up.place(x=375, y=220)
 
-button_down = tk.Button(root, text="v", command=move_down)
+button_down = tk.Button(root, text="⋁", command=move_down)
 button_down.configure(bg='red', cursor='hand2', fg='#f0f0f0', font=('Arial', 12, 'bold'))
 button_down.place(x=425, y=220)
 
