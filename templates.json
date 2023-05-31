@@ -14,10 +14,10 @@
     "custom_order": ""
   },
   {
-    "name": "custom_order_test",
-    "query": "select * from tabela where user_id = {brojac} and edit this query now",
+    "name": "test",
+    "query": "{brojac} + {brojac} = {brojac} * {brojac} - {brojac}",
     "od": "1",
-    "do": "500",
+    "do": "12",
     "custom_order": ""
   }
 ]

@@ -225,7 +225,10 @@ def rename_template():
         new_name = simpledialog.askstring("Rename Template", "Enter a new name for the template:")
         if new_name:
             with open('templates.json', 'r') as file:
-                templates = [json.loads(line) for line in file]
+                try:
+                    templates = json.load(file)
+                except json.JSONDecodeError:
+                    templates = []
 
             template = next((t for t in templates if t['name'] == selected_template), None)
 
@@ -233,8 +236,7 @@ def rename_template():
                 template['name'] = new_name
 
                 with open('templates.json', 'w') as file:
-                    for t in templates:
-                        file.write(json.dumps(t) + '\n')
+                    json.dump(templates, file, indent=2)
 
                 name_listbox.delete(tk.ACTIVE)
                 name_listbox.insert(tk.END, new_name)
@@ -242,6 +244,8 @@ def rename_template():
                 messagebox.showerror("Error", "Selected template not found.")
         else:
             messagebox.showerror("Error", "New name cannot be empty.")
+
+
 
 
 def edit():
