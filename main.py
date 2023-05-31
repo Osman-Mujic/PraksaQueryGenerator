@@ -3,39 +3,21 @@ from tkinter import filedialog, messagebox, simpledialog
 import json
 import os
 
+
+def validate_integer(text):
+    if text.isdigit() or text == "":
+        return True
+    else:
+        return False
+
+
 root = tk.Tk()
 root.title("SQL Query generator")
 root.geometry("490x600")
 root.configure(bg='#202020')
 
-menu_bar = tk.Menu(root)
-help_menu = tk.Menu(menu_bar, tearoff=0)
-help_menu.add_command(label="Info", command=lambda: messagebox.showinfo("Help", "In order to use the program you will "
-                                                                                "need to write a sql query + add a {"
-                                                                                "brojac} somewhere in the query, "
-                                                                                "after you finish your query add "
-                                                                                "digits that you want your query to "
-                                                                                "go from and to or do it in a custom "
-                                                                                "order if you wish that ( you can "
-                                                                                "only do one of the two ways not "
-                                                                                "both).\n\nAfter that click the view "
-                                                                                "button and your query should be "
-                                                                                "generated, if you wish to reuse it "
-                                                                                "you can save it using the save "
-                                                                                "button and giving it a name (DO NOT "
-                                                                                "NAME MULTIPLE TEMPLATES WITH THE "
-                                                                                "SAME NAME).\n\nAfter that you will "
-                                                                                "have some more options to rename a "
-                                                                                "saved template or to delete it. To "
-                                                                                "use the saved templates it is best "
-                                                                                "to click on a selected template and "
-                                                                                "then use the keyboard to navigate to "
-                                                                                "your desired template because the "
-                                                                                "mouse does not interact the best "
-                                                                                "with a listbox."))
-
-menu_bar.add_cascade(label="Help", menu=help_menu)
-root.config(menu=menu_bar)
+validate_cmd_od = root.register(validate_integer)
+validate_cmd_do = root.register(validate_integer)
 
 query_label = tk.Label(root, text="Query")
 query_label.configure(font=('Arial', 12), fg='#f0f0f0', bg='#202020')
@@ -49,7 +31,7 @@ od_label = tk.Label(root, text="From:")
 od_label.configure(font=('Arial', 12), fg='#f0f0f0', bg='#202020')
 od_label.place(x=130, y=220)
 
-od_textbox = tk.Entry(root)
+od_textbox = tk.Entry(root, validate="key", validatecommand=(validate_cmd_od, "%P"))
 od_textbox.configure(font=('Arial', 12), fg='#f0f0f0', bg='#404040', width=5)
 od_textbox.place(x=180, y=220)
 
@@ -57,7 +39,7 @@ do_label = tk.Label(root, text="To:")
 do_label.configure(font=('Arial', 12), fg='#f0f0f0', bg='#202020')
 do_label.place(x=240, y=220)
 
-do_textbox = tk.Entry(root)
+do_textbox = tk.Entry(root, validate="key", validatecommand=(validate_cmd_do, "%P"))
 do_textbox.configure(font=('Arial', 12), fg='#f0f0f0', bg='#404040', width=5)
 do_textbox.place(x=275, y=220)
 
@@ -76,6 +58,8 @@ list_label.place(x=180, y=310)
 name_listbox = tk.Listbox(root)
 name_listbox.configure(bg='#404040', fg='#f0f0f0', font=('Arial', 12))
 name_listbox.place(x=20, y=340, width=455, height=200)
+
+selected_index = None
 
 
 def get_query_text():
@@ -142,6 +126,8 @@ def save():
 
 def select_template(event):
     selected_template = name_listbox.get(tk.ACTIVE)
+    global selected_index
+    selected_index = name_listbox.curselection()[0]
 
     templates = load_templates()
 
@@ -289,17 +275,55 @@ def edit():
         messagebox.showerror("Error", "No template selected.")
 
 
+def move_up():
+    global selected_index
+    if selected_index is not None and selected_index > 0:
+        item_text = name_listbox.get(selected_index)
+        name_listbox.delete(selected_index)
+        name_listbox.insert(selected_index - 1, item_text)
+        selected_index -= 1
+        name_listbox.selection_set(selected_index)
+
+def move_down():
+    global selected_index
+    if selected_index is not None and selected_index < name_listbox.size() - 1:
+        item_text = name_listbox.get(selected_index)
+        name_listbox.delete(selected_index)
+        name_listbox.insert(selected_index + 1, item_text)
+        selected_index += 1
+        name_listbox.selection_set(selected_index)
+
+def save_template_order():
+    templates = []
+    for index in range(name_listbox.size()):
+        template_name = name_listbox.get(index)
+        template = next((t for t in load_templates() if t['name'] == template_name), None)
+        if template:
+            templates.append(template)
+
+    with open('templates.json', 'w') as file:
+        json.dump(templates, file, indent=2)
+
+
+button_up = tk.Button(root, text="^", command=move_up)
+button_up.configure(bg='green', cursor='hand2', fg='#f0f0f0', font=('Arial', 12, 'bold'))
+button_up.place(x=375, y=220)
+
+button_down = tk.Button(root, text="ˇ", command=move_down)
+button_down.configure(bg='red', cursor='hand2', fg='#f0f0f0', font=('Arial', 12, 'bold'))
+button_down.place(x=425, y=220)
+
 button_save = tk.Button(root, text="Save", command=save)
 button_save.configure(bg='#008a00', cursor='hand2', fg='#f0f0f0', font=('Arial', 12, 'bold'))
 button_save.place(x=20, y=550)
 
-button_preview = tk.Button(root, text="View", command=preview)
+button_preview = tk.Button(root, text="Generate", command=preview)
 button_preview.configure(bg='blue', cursor='hand2', fg='#f0f0f0', font=('Arial', 12, 'bold'))
-button_preview.place(x=100, y=550)
+button_preview.place(x=90, y=550)
 
 button_edit = tk.Button(root, text="Edit Query", command=edit)
 button_edit.configure(bg='purple', cursor='hand2', fg='#f0f0f0', font=('Arial', 12, 'bold'))
-button_edit.place(x=185, y=550)
+button_edit.place(x=200, y=550)
 
 button_delete = tk.Button(root, text="Delete", command=delete)
 button_delete.configure(bg='#a60000', cursor='hand2', fg='#f0f0f0', font=('Arial', 12, 'bold'))

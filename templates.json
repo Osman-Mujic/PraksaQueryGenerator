@@ -1,16 +1,16 @@
 [
   {
-    "name": "Teest1",
-    "query": "select * from tabela where user_id = {brojac} aaaaa",
-    "od": "1",
-    "do": "50",
-    "custom_order": ""
-  },
-  {
     "name": "test 2",
     "query": "select * from tabela where user_id = {brojac}",
     "od": "1",
     "do": "500",
+    "custom_order": ""
+  },
+  {
+    "name": "Teest1",
+    "query": "select * from tabela where user_id = {brojac} aaaaa",
+    "od": "1",
+    "do": "50",
     "custom_order": ""
   },
   {
