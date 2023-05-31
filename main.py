@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog, messagebox, simpledialog
 import json
+import os
 
 root = tk.Tk()
 root.title("SQL Query generator")
@@ -84,9 +85,9 @@ def get_query_text():
 def load_templates():
     try:
         with open('templates.json', 'r') as file:
-            templates = [json.loads(line.strip()) for line in file if line.strip()]
+            templates = json.load(file)
         return templates
-    except FileNotFoundError:
+    except (FileNotFoundError, json.JSONDecodeError):
         return []
 
 
@@ -116,8 +117,19 @@ def save():
             if template_name:
                 template['name'] = template_name
 
-                with open('templates.json', 'a') as file:
-                    file.write(json.dumps(template) + '\n')
+                templates = []
+
+                if os.path.exists('templates.json') and os.stat('templates.json').st_size > 0:
+                    with open('templates.json', 'r') as file:
+                        try:
+                            templates = json.load(file)
+                        except json.JSONDecodeError:
+                            pass
+
+                templates.append(template)
+
+                with open('templates.json', 'w') as file:
+                    json.dump(templates, file, indent=2)
 
                 name_listbox.insert(tk.END, template_name)
             else:
@@ -128,12 +140,10 @@ def save():
         messagebox.showerror("Error", "Query must contain {brojac}")
 
 
-
 def select_template(event):
     selected_template = name_listbox.get(tk.ACTIVE)
 
-    with open('templates.json', 'r') as file:
-        templates = [json.loads(line) for line in file]
+    templates = load_templates()
 
     selected_template_data = next((template for template in templates if template['name'] == selected_template), None)
 
@@ -149,7 +159,6 @@ def select_template(event):
 
         custom_textbox.delete(0, tk.END)
         custom_textbox.insert(tk.END, selected_template_data.get('custom_order', ''))
-
 
 
 name_listbox.bind("<<ListboxSelect>>", select_template)
@@ -248,6 +257,38 @@ def rename_template():
             messagebox.showerror("Error", "New name cannot be empty.")
 
 
+def edit():
+    selected_template = name_listbox.get(tk.ACTIVE)
+    if selected_template:
+        new_query = get_query_text()
+        new_od = od_textbox.get()
+        new_do = do_textbox.get()
+        new_custom_order = custom_textbox.get()
+
+        if "{brojac}" in new_query:
+            templates = load_templates()
+
+            for template in templates:
+                if template['name'] == selected_template:
+                    template['query'] = new_query
+                    template['od'] = new_od
+                    template['do'] = new_do
+                    template['custom_order'] = new_custom_order
+
+            with open('templates.json', 'w') as file:
+                json.dump(templates, file, indent=2)
+
+            name_listbox.delete(0, tk.END)
+            for template in templates:
+                name_listbox.insert(tk.END, template['name'])
+
+            messagebox.showinfo("Success", "Template updated successfully.")
+        else:
+            messagebox.showerror("Error", "Query must contain {brojac}.")
+    else:
+        messagebox.showerror("Error", "No template selected.")
+
+
 button_save = tk.Button(root, text="Save", command=save)
 button_save.configure(bg='#008a00', cursor='hand2', fg='#f0f0f0', font=('Arial', 12, 'bold'))
 button_save.place(x=20, y=550)
@@ -256,9 +297,13 @@ button_preview = tk.Button(root, text="View", command=preview)
 button_preview.configure(bg='blue', cursor='hand2', fg='#f0f0f0', font=('Arial', 12, 'bold'))
 button_preview.place(x=100, y=550)
 
+button_edit = tk.Button(root, text="Edit Query", command=edit)
+button_edit.configure(bg='purple', cursor='hand2', fg='#f0f0f0', font=('Arial', 12, 'bold'))
+button_edit.place(x=185, y=550)
+
 button_delete = tk.Button(root, text="Delete", command=delete)
 button_delete.configure(bg='#a60000', cursor='hand2', fg='#f0f0f0', font=('Arial', 12, 'bold'))
-button_delete.place(x=300, y=550)
+button_delete.place(x=320, y=550)
 
 button_rename = tk.Button(root, text="Rename", command=rename_template)
 button_rename.configure(bg='purple', cursor='hand2', fg='#f0f0f0', font=('Arial', 12, 'bold'))
