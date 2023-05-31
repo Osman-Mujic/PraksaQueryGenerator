@@ -283,6 +283,7 @@ def move_up():
         name_listbox.insert(selected_index - 1, item_text)
         selected_index -= 1
         name_listbox.selection_set(selected_index)
+        save_template_order()
 
 
 def move_down():
@@ -293,6 +294,7 @@ def move_down():
         name_listbox.insert(selected_index + 1, item_text)
         selected_index += 1
         name_listbox.selection_set(selected_index)
+        save_template_order()
 
 
 def save_template_order():

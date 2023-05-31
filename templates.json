@@ -1,5 +1,12 @@
 [
   {
+    "name": "custom_order_test",
+    "query": "select * from tabela where user_id = {brojac}",
+    "od": "",
+    "do": "",
+    "custom_order": "1,4,76,9,2,1"
+  },
+  {
     "name": "test 2",
     "query": "select * from tabela where user_id = {brojac}",
     "od": "1",
@@ -12,12 +19,5 @@
     "od": "1",
     "do": "50",
     "custom_order": ""
-  },
-  {
-    "name": "custom_order_test",
-    "query": "select * from tabela where user_id = {brojac}",
-    "od": "",
-    "do": "",
-    "custom_order": "1,4,76,9,2,1"
   }
 ]
