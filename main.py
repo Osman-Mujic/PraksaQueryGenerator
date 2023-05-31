@@ -321,15 +321,15 @@ button_save.place(x=20, y=550)
 
 button_preview = tk.Button(root, text="Generate", command=preview)
 button_preview.configure(bg='blue', cursor='hand2', fg='#f0f0f0', font=('Arial', 12, 'bold'))
-button_preview.place(x=90, y=550)
+button_preview.place(x=80, y=550)
 
-button_edit = tk.Button(root, text="Edit Query", command=edit)
+button_edit = tk.Button(root, text="Save Edited Query", command=edit)
 button_edit.configure(bg='purple', cursor='hand2', fg='#f0f0f0', font=('Arial', 12, 'bold'))
-button_edit.place(x=200, y=550)
+button_edit.place(x=170, y=550)
 
 button_delete = tk.Button(root, text="Delete", command=delete)
 button_delete.configure(bg='#a60000', cursor='hand2', fg='#f0f0f0', font=('Arial', 12, 'bold'))
-button_delete.place(x=320, y=550)
+button_delete.place(x=330, y=550)
 
 button_rename = tk.Button(root, text="Rename", command=rename_template)
 button_rename.configure(bg='purple', cursor='hand2', fg='#f0f0f0', font=('Arial', 12, 'bold'))
