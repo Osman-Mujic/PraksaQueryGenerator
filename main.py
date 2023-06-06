@@ -244,10 +244,6 @@ def rename_template():
             messagebox.showerror("Error", "New name cannot be empty.")
 
 
-
-
-
-
 def edit():
     selected_template = name_listbox.get(tk.ACTIVE)
     if selected_template:
@@ -315,31 +311,31 @@ def save_template_order():
 
 
 button_up = tk.Button(root, text="⋀", command=move_up)
-button_up.configure(bg='green', cursor='hand2', fg='#f0f0f0', font=('Arial', 12, 'bold'))
+button_up.configure(bg='green', cursor='hand2', fg='#f0f0f0', font=('Arial', 12, 'bold'), relief='flat')
 button_up.place(x=375, y=220)
 
 button_down = tk.Button(root, text="⋁", command=move_down)
-button_down.configure(bg='red', cursor='hand2', fg='#f0f0f0', font=('Arial', 12, 'bold'))
+button_down.configure(bg='red', cursor='hand2', fg='#f0f0f0', font=('Arial', 12, 'bold'), relief='flat')
 button_down.place(x=425, y=220)
 
 button_save = tk.Button(root, text="Save", command=save)
-button_save.configure(bg='#008a00', cursor='hand2', fg='#f0f0f0', font=('Arial', 12, 'bold'))
+button_save.configure(bg='#008a00', cursor='hand2', fg='#f0f0f0', font=('Arial', 12, 'bold'), relief='flat')
 button_save.place(x=20, y=550)
 
 button_preview = tk.Button(root, text="Generate", command=preview)
-button_preview.configure(bg='blue', cursor='hand2', fg='#f0f0f0', font=('Arial', 12, 'bold'))
+button_preview.configure(bg='blue', cursor='hand2', fg='#f0f0f0', font=('Arial', 12, 'bold'), relief='flat')
 button_preview.place(x=80, y=550)
 
 button_edit = tk.Button(root, text="Save Edited Query", command=edit)
-button_edit.configure(bg='purple', cursor='hand2', fg='#f0f0f0', font=('Arial', 12, 'bold'))
+button_edit.configure(bg='purple', cursor='hand2', fg='#f0f0f0', font=('Arial', 12, 'bold'), relief='flat')
 button_edit.place(x=170, y=550)
 
 button_delete = tk.Button(root, text="Delete", command=delete)
-button_delete.configure(bg='#a60000', cursor='hand2', fg='#f0f0f0', font=('Arial', 12, 'bold'))
+button_delete.configure(bg='#a60000', cursor='hand2', fg='#f0f0f0', font=('Arial', 12, 'bold'), relief='flat')
 button_delete.place(x=330, y=550)
 
 button_rename = tk.Button(root, text="Rename", command=rename_template)
-button_rename.configure(bg='purple', cursor='hand2', fg='#f0f0f0', font=('Arial', 12, 'bold'))
+button_rename.configure(bg='purple', cursor='hand2', fg='#f0f0f0', font=('Arial', 12, 'bold'), relief='flat')
 button_rename.place(x=400, y=550)
 
 root.mainloop()

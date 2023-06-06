@@ -2861,7 +2861,7 @@
  [],
  False,
  False,
- 1685521298,
+ 1685521460,
  [('runw.exe',
    'C:\\Users\\praksa2\\PycharmProjects\\SQL_Querry_Generator\\venv\\lib\\site-packages\\PyInstaller\\bootloader\\Windows-64bit-intel\\runw.exe',
    'EXECUTABLE')])

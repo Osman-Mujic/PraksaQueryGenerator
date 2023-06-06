@@ -1,16 +1,9 @@
 [
   {
-    "name": "weewtg",
+    "name": "rdgg",
     "query": "{brojac} + {brojac} = {brojac} * {brojac} - {brojac}",
     "od": "1",
-    "do": "12",
-    "custom_order": ""
-  },
-  {
-    "name": "rdgg",
-    "query": "select * from tabela where user_id = {brojac}s",
-    "od": "1",
-    "do": "500",
+    "do": "120",
     "custom_order": ""
   },
   {
@@ -18,6 +11,13 @@
     "query": "select * from tabela where user_id = {brojac}",
     "od": "1",
     "do": "500",
+    "custom_order": ""
+  },
+  {
+    "name": "3",
+    "query": "{brojac} + {brojac} = {brojac} * {brojac} - {brojac}",
+    "od": "1",
+    "do": "12",
     "custom_order": ""
   },
   {
